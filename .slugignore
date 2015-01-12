@@ -1,0 +1,11 @@
+.DS_Store
+
+/.gradle
+/.idea
+/build
+/gradle
+/mobile
+/shared
+/wear
+/node_modules
+/logs

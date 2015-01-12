@@ -1,0 +1,78 @@
+html, body {
+    background: #222;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-family: "Open Sans";
+    font-weight: 300;
+    color: #FFF;
+}
+#glyph {
+    position: absolute;
+    top:20px;
+    left:0;
+    margin: 0 auto;
+    right:0;
+}
+.item {
+    float: left;
+    cursor: pointer;
+}
+.page {
+    display: table-cell;
+    border-right: 1px solid #444;
+    vertical-align: middle;
+    font-size: 12px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.page-selected {
+    font-weight: bold;
+    background: #444;
+}
+.browse-wrap {
+    cursor: pointer;
+    overflow: hidden;
+    display: table-cell;
+    position: relative;
+    background-color: #2ecc71;
+}
+.title {
+    color: #FFF;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: none !important;
+}
+.upload {
+    right: 0;
+    margin: 0;
+    bottom: 0;
+    padding: 0;
+    opacity: 0;
+    height: 300px;
+    outline: none;
+    cursor: inherit;
+    position: absolute;
+    font-size: 1000px !important;
+    font-family: "Open Sans";
+}
+.upload-path {
+    text-align: center;
+    margin: 20px;
+    display: block;
+    font-size: 80%;
+    color: #3b5998;
+    font-family: "Open Sans";
+}
+#pagination, .pagination {
+    text-align: left;
+    font-size: 12px;
+    display: table;
+    height: 100%;
+    color: #FFF;
+}
+.item:hover {
+    background: #333;
+}

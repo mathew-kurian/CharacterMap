@@ -1,0 +1,31 @@
+{
+  "name": "character-map",
+  "description": "Online accessible font-character map / glyph viewer",
+  "version": "2.0.3",
+  "homepage": "https://github.com/bluejamesbond/CharacterMap",
+  "keywords": [],
+  "author": {
+    "name": "Mathew Kurian",
+    "email": "MathewKurian@utexas.edu",
+    "url": "https://github.com/bluejamesbond"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bluejamesbond/CharacterMap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bluejamesbond/CharacterMap/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "https://github.com/bluejamesbond/CharacterMap/blob/master/LICENSE"
+    }
+  ],
+  "main": "app.js",
+  "license": "MIT",
+  "dependencies": {
+    "scribe-js": "^2.0.3"
+  },
+  "readmeFilename": "README.md"
+}
