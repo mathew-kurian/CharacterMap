@@ -137,15 +137,24 @@ function renderGlyphItem(canvas, glyphIndex) {
     path.draw(ctx);
 }
 
+var resolveGlyphDpi;
+var glyphBgCanvasHeight;
+
 function initGlyphDisplay() {
     var glyphBgCanvas = document.getElementById('glyph-bg'),
-        w = glyphBgCanvas.width,
+        ctx = glyphBgCanvas.getContext('2d');
+
+    if (!resolveGlyphDpi) {
+        hidpi(glyphBgCanvas, glyphBgCanvas.width, glyphBgCanvas.height);
+        resolveGlyphDpi = true;
+    }
+
+    var w = glyphBgCanvas.width,
         h = 300,
         glyphW = w - glyphMargin * 2,
         glyphH = h - glyphMargin * 2,
         head = font.tables.head,
-        maxHeight = head.yMax - head.yMin,
-        ctx = glyphBgCanvas.getContext('2d');
+        maxHeight = head.yMax - head.yMin;
 
     glyphScale = Math.min(glyphW / (head.xMax - head.xMin), glyphH / maxHeight);
     glyphSize = glyphScale * font.unitsPerEm;
@@ -154,7 +163,7 @@ function initGlyphDisplay() {
     function hline(text, yunits) {
         ypx = glyphBaseline - yunits * glyphScale;
         ctx.fillStyle = '#788b94';
-        ctx.font = '600 12px/1.4 "Open Sans"';
+        ctx.font = 'bold 12px "Open Sans"';
         ctx.fillText(text.toUpperCase(), 2, ypx + 3);
         ctx.fillStyle = 'rgba(255,255,255,0.12)';
         ctx.fillRect(90, ypx, w, 1);
@@ -198,36 +207,45 @@ function displayGlyphData(glyphIndex) {
     }
     var glyph = font.glyphs[glyphIndex],
         html;
-    html = '<dt>name</dt><dd>'+glyph.name+'</dd>';
+    html = '<dt>name</dt><dd>' + glyph.name + '</dd>';
 
     if (glyph.unicodes.length > 0) {
-        html += '<dt>unicode</dt><dd>'+ glyph.unicodes.map(formatUnicode).join(', ') +'</dd>';
+        html += '<dt>unicode</dt><dd>' + glyph.unicodes.map(formatUnicode).join(', ') + '</dd>';
     }
-    html += '<dl><dt>index</dt><dd>'+glyph.index+'</dd>';
+    html += '<dl><dt>index</dt><dd>' + glyph.index + '</dd>';
 
     if (glyph.xMin !== 0 || glyph.xMax !== 0 || glyph.yMin !== 0 || glyph.yMax !== 0) {
-        html += '<dt>xMin</dt><dd>'+glyph.xMin+'</dd>' +
-            '<dt>xMax</dt><dd>'+glyph.xMax+'</dd>' +
-            '<dt>yMin</dt><dd>'+glyph.yMin+'</dd>' +
-            '<dt>yMax</dt><dd>'+glyph.yMax+'</dd>';
+        html += '<dt>xMin</dt><dd>' + glyph.xMin + '</dd>' +
+            '<dt>xMax</dt><dd>' + glyph.xMax + '</dd>' +
+            '<dt>yMin</dt><dd>' + glyph.yMin + '</dd>' +
+            '<dt>yMax</dt><dd>' + glyph.yMax + '</dd>';
     }
-    html += '<dt>advWidth</dt><dd>'+glyph.advanceWidth+'</dd>';
-    if(glyph.leftSideBearing !== undefined) {
-        html += '<dt>leftBearing</dt><dd>'+glyph.leftSideBearing+'</dd>';
+    html += '<dt>advWidth</dt><dd>' + glyph.advanceWidth + '</dd>';
+    if (glyph.leftSideBearing !== undefined) {
+        html += '<dt>leftBearing</dt><dd>' + glyph.leftSideBearing + '</dd>';
     }
     html += '</dl>';
     container.innerHTML = html;
 }
 
+var resolveDisplayGlyph;
+
 function displayGlyph(glyphIndex) {
     var canvas = document.getElementById('glyph'),
         ctx = canvas.getContext('2d');
+    if (!resolveDisplayGlyph) {
+        hidpi(canvas, canvas.width, canvas.height);
+        resolveDisplayGlyph = true;
+    }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     if (glyphIndex < 0) return;
+
     var glyph = font.glyphs[glyphIndex],
         glyphWidth = glyph.advanceWidth * glyphScale,
-        xmin = (canvas.width - glyphWidth) / 2,
-        xmax = (canvas.width + glyphWidth) / 2,
+        xmin = (canvas.width / window.devicePixelRatio - glyphWidth) / 2,
+        xmax = (canvas.width / window.devicePixelRatio + glyphWidth) / 2,
         x0 = xmin,
         markSize = 10;
 
@@ -336,9 +354,9 @@ function onFontLoaded(font) {
 
 function pathCommandToString(cmd) {
     var str = '<strong>' + cmd.type + '</strong> ' +
-        ((cmd.x !== undefined) ? 'x='+cmd.x+' y='+cmd.y+' ' : '') +
-        ((cmd.x1 !== undefined) ? 'x1='+cmd.x1+' y1='+cmd.y1+' ' : '') +
-        ((cmd.x2 !== undefined) ? 'x2='+cmd.x2+' y2='+cmd.y2 : '');
+        ((cmd.x !== undefined) ? 'x=' + cmd.x + ' y=' + cmd.y + ' ' : '') +
+        ((cmd.x1 !== undefined) ? 'x1=' + cmd.x1 + ' y1=' + cmd.y1 + ' ' : '') +
+        ((cmd.x2 !== undefined) ? 'x2=' + cmd.x2 + ' y2=' + cmd.y2 : '');
     return str;
 }
 
@@ -347,6 +365,7 @@ function contourToString(contour) {
         return '<span class="' + (point.onCurve ? 'on' : 'off') + 'curve">x=' + point.x + ' y=' + point.y + '</span>';
     }).join('\n') + '</pre>';
 }
+
 function formatUnicode(unicode) {
     unicode = unicode.toString(16);
     if (unicode.length > 4) {
@@ -375,13 +394,20 @@ function prepareGlyphList() {
         parent = marker.parentElement;
     for (var i = 0; i < cellCount; i++) {
         var canvas = document.createElement('canvas');
-        canvas.width = cellWidth;
-        canvas.height = cellHeight;
+        hidpi(canvas, cellWidth, cellHeight);
         canvas.className = 'item';
         canvas.id = 'g' + i;
         canvas.addEventListener('click', cellSelect, false);
         parent.insertBefore(canvas, marker);
     }
+}
+
+function hidpi(canvas, height, width) {
+    canvas.width = height * window.devicePixelRatio;
+    canvas.height = width * window.devicePixelRatio;
+    canvas.style.width = height + 'px';
+    canvas.style.height = width + 'px';
+    canvas.getContext('2d').scale(window.devicePixelRatio, window.devicePixelRatio);
 }
 
 function showErrorMessage(message) {

@@ -4,7 +4,6 @@ html, body {
     margin: 0;
     border: 0;
     font-family: "Open Sans";
-    font-weight: 300;
     color: #FFF;
 }
 html {
@@ -16,7 +15,7 @@ html {
 #glyph {
     position: absolute;
     top: 0;
-    left: 125px;
+    left: 100px;
     margin: 0 auto;
 }
 .item {
@@ -91,7 +90,7 @@ html {
 }
 #glyph-data dt {
     float: left;
-    font: 600 12px/1.4 "Open Sans";
+    font: bold 12px/1.4 "Open Sans";
     color: #788b94;
     text-transform: uppercase;
     margin-bottom: 10px;
