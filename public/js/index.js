@@ -1,3 +1,6 @@
+// Note
+// Code from http://nodebox.github.io/opentype.js/glyph-inspector.html
+
 var fileButton, fontFamily;
 var pageSelected, font, fontScale, fontSize, fontBaseline, glyphScale, glyphSize, glyphBaseline;
 
@@ -112,9 +115,9 @@ function drawArrow(ctx, x1, y1, x2, y2) {
 function renderGlyphItem(canvas, glyphIndex) {
     var cellMarkSize = 6;
     var ctx = canvas.getContext('2d');
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     ctx.clearRect(0, 0, cellWidth, cellHeight);
     if (glyphIndex >= font.numGlyphs) return;
-
     ctx.fillStyle = '#AAA';
     ctx.font = '9px "Open Sans"';
     ctx.fillText(glyphIndex, 2, cellHeight - 2);
@@ -138,8 +141,14 @@ function renderGlyphItem(canvas, glyphIndex) {
 }
 
 function initGlyphDisplay() {
-    var glyphBgCanvas = document.getElementById('glyph-bg'),
-        w = glyphBgCanvas.width,
+    var glyphBgCanvas = document.getElementById('glyph-bg');
+
+    glyphBgCanvas.width = glyphBgCanvas.width * window.devicePixelRatio;
+    glyphBgCanvas.height = glyphBgCanvas.height * window.devicePixelRatio;
+    $(glyphBgCanvas).css('width', glyphBgCanvas.width);
+    $(glyphBgCanvas).css('height', glyphBgCanvas.height);
+
+    var w = glyphBgCanvas.width / window.devicePixelRatio,
         h = 300,
         glyphW = w - glyphMargin * 2,
         glyphH = h - glyphMargin * 2,
@@ -160,6 +169,7 @@ function initGlyphDisplay() {
         ctx.fillRect(90, ypx, w, 1);
     }
 
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     ctx.clearRect(0, 0, w, glyphBgCanvas.height);
     hline('Baseline', 0);
     hline('yMax', font.tables.head.yMax);
@@ -375,8 +385,10 @@ function prepareGlyphList() {
         parent = marker.parentElement;
     for (var i = 0; i < cellCount; i++) {
         var canvas = document.createElement('canvas');
-        canvas.width = cellWidth;
-        canvas.height = cellHeight;
+        canvas.width = cellWidth * window.devicePixelRatio;
+        canvas.height = cellHeight* window.devicePixelRatio;
+        $(canvas).css('width', canvas.width);
+        $(canvas).css('height', canvas.height);
         canvas.className = 'item';
         canvas.id = 'g' + i;
         canvas.addEventListener('click', cellSelect, false);
@@ -385,11 +397,7 @@ function prepareGlyphList() {
 }
 
 function showErrorMessage(message) {
-    var el = document.getElementById('message');
-    if (!message || message.trim().length === 0) {
-        el.style.display = 'none';
-    } else {
-        el.style.display = 'block';
+    if(message){
+        alert(message);
     }
-    el.innerHTML = message;
 }
