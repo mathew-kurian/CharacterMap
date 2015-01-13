@@ -12,7 +12,7 @@
     <script src ="js/index.js" type="text/javascript"></script>
   </head>
   <body>
-    <div style = "position:fixed;top:0;right:0;left:0;border-bottom:1px solid #444;height:40px;background:#444;box-shadow: 0 10px 10px -10px #000;">
+    <div style = "position:fixed;top:0;right:0;left:0;bottom:0;width:200px;background:#171D25;">
       <div id="pagination">
         <div class="page browse-wrap">
           <div class="title page" id="font-family">select font</div>
@@ -20,14 +20,16 @@
         </div>
       </div>
     </div>
-    <div style="position:fixed;left:0;right:740px;top:41px;bottom:0;">
-        <div id="glyph-list-end"></div>
-    </div>
-    <div style="position:fixed;width:700px;right:0;top:41px;bottom:0;background: #333;padding:20px;box-shadow: -10px 0 10px -10px #000;">
+    <div style="position:fixed;left:200px;width:600px;top:0;bottom:0;background:#1D242E;padding:20px;">
       <div id="glyph-display">
-        <canvas id="glyph-bg" width="700" height="500"></canvas>
-        <canvas id="glyph" width="500" height="600"></canvas>
+        <canvas id="glyph-bg" width="600" height="500"></canvas>
+        <canvas id="glyph" width="500" height="500" style="left:120px;"></canvas>
       </div>
+    </div>
+    <div style="position:fixed;left:850px;right:0;top:0;bottom:0;background: #FFF;">
+        <div style="overflow:auto;height:100%;overflow-x:hidden;">
+          <div id="glyph-list-end"></div>
+        </div>
     </div>
     <div>
       <div id="message"></div>

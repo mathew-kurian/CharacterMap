@@ -17,14 +17,15 @@ html, body {
 .item {
     float: left;
     cursor: pointer;
+    border: solid 1px #EEE;
+    margin-right: -1px;
+    margin-top:-1px;
 }
 .page {
-    display: table-cell;
-    border-right: 1px solid #444;
     vertical-align: middle;
     font-size: 12px;
-    padding-left: 30px;
-    padding-right: 30px;
+    text-align: center;
+    padding: 10px 0;
 }
 .page-selected {
     font-weight: bold;
@@ -33,9 +34,9 @@ html, body {
 .browse-wrap {
     cursor: pointer;
     overflow: hidden;
-    display: table-cell;
     position: relative;
-    background-color: #2ecc71;
+    background-color: #00bff3;
+    width: 100%;
 }
 .title {
     color: #FFF;
@@ -69,10 +70,9 @@ html, body {
 #pagination, .pagination {
     text-align: left;
     font-size: 12px;
-    display: table;
     height: 100%;
     color: #FFF;
 }
 .item:hover {
-    background: #333;
+    background: #EEE;
 }

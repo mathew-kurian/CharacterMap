@@ -16,7 +16,6 @@ function cellSelect(event) {
         glyphIndex = firstGlyphIndex + cellIndex;
     if (glyphIndex < font.numGlyphs) {
         displayGlyph(glyphIndex);
-        displayGlyphData(glyphIndex);
     }
 }
 
@@ -79,9 +78,9 @@ function drawPathWithArrows(ctx, path) {
     if (path.stroke) {
         ctx.strokeStyle = path.stroke;
         ctx.lineWidth = path.strokeWidth;
+        ctx.fillStyle = path.stroke;
         ctx.stroke();
     }
-    ctx.fillStyle = '#FFFFFF';
     arrows.forEach(function(arrow) {
         drawArrow.apply(null, arrow);
     });
@@ -115,7 +114,7 @@ function renderGlyphItem(canvas, glyphIndex) {
     ctx.clearRect(0, 0, cellWidth, cellHeight);
     if (glyphIndex >= font.numGlyphs) return;
 
-    ctx.fillStyle = '#CCC';
+    ctx.fillStyle = '#AAA';
     ctx.font = '9px "Open Sans"';
     ctx.fillText(glyphIndex, 2, cellHeight - 2);
     var glyph = font.glyphs[glyphIndex],
@@ -133,7 +132,7 @@ function renderGlyphItem(canvas, glyphIndex) {
     ctx.fillStyle = '#FFFFFF';
 
     var path = glyph.getPath(x0, fontBaseline, fontSize);
-    path.fill = "#FFFFFF";
+    path.fill = "#555";
     path.draw(ctx);
 }
 
@@ -153,11 +152,11 @@ function initGlyphDisplay() {
 
     function hline(text, yunits) {
         ypx = glyphBaseline - yunits * glyphScale;
-        ctx.fillStyle = '#bbb';
-        ctx.font = '9px "Open Sans"';
+        ctx.fillStyle = '#788b94';
+        ctx.font = '600 12px/1.4 "Open Sans"';
         ctx.fillText(text.toUpperCase(), 2, ypx + 3);
-        ctx.fillStyle = '#444';
-        ctx.fillRect(100, ypx, w, 1);
+        ctx.fillStyle = 'rgba(255,255,255,0.12)';
+        ctx.fillRect(120, ypx, w, 1);
     }
 
     ctx.clearRect(0, 0, w, h);
@@ -202,22 +201,72 @@ function displayGlyph(glyphIndex) {
         x0 = xmin,
         markSize = 10;
 
-    ctx.fillStyle = '#606060';
-    ctx.fillRect(xmin - markSize + 1, glyphBaseline, markSize, 1);
-    ctx.fillRect(xmin, glyphBaseline, 1, markSize);
-    ctx.fillRect(xmax, glyphBaseline, markSize, 1);
-    ctx.fillRect(xmax, glyphBaseline, 1, markSize);
+    ctx.fillStyle = '#EA682E';
+    ctx.fillRect(xmin - markSize + 1, glyphBaseline, markSize, 2);
+    ctx.fillRect(xmin, glyphBaseline, 2, markSize);
+    ctx.fillRect(xmax, glyphBaseline, markSize, 2);
+    ctx.fillRect(xmax, glyphBaseline, 2, markSize);
     ctx.textAlign = 'center';
     ctx.fillText('0', xmin, glyphBaseline + markSize + 10);
     ctx.fillText(glyph.advanceWidth, xmax, glyphBaseline + markSize + 10);
 
     ctx.fillStyle = '#FFFFFF';
     var path = glyph.getPath(x0, glyphBaseline, glyphSize);
-    path.fill = '#808080';
-    path.stroke = '#FFFFFF';
-    path.strokeWidth = 1.5;
+    path.fill = '#565656';
+    path.stroke = '#777';
+    path.strokeWidth = 1;
     drawPathWithArrows(ctx, path);
-    glyph.drawPoints(ctx, x0, glyphBaseline, glyphSize);
+    drawPoints(glyph, ctx, x0, glyphBaseline, glyphSize);
+}
+
+function drawPoints(glyph, ctx, x, y, fontSize) {
+
+    function drawCircles(l, x, y, scale) {
+        var j, PI_SQ = Math.PI * 2;
+        ctx.beginPath();
+        for (j = 0; j < l.length; j += 1) {
+            ctx.moveTo(x + (l[j].x * scale), y + (l[j].y * scale));
+            ctx.arc(x + (l[j].x * scale), y + (l[j].y * scale), 2, 0, PI_SQ, false);
+        }
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    var scale, i, blueCircles, redCircles, path, cmd;
+    x = x !== undefined ? x : 0;
+    y = y !== undefined ? y : 0;
+    fontSize = fontSize !== undefined ? fontSize : 24;
+    scale = 1 / glyph.font.unitsPerEm * fontSize;
+
+    blueCircles = [];
+    redCircles = [];
+    path = glyph.path;
+    for (i = 0; i < path.commands.length; i += 1) {
+        cmd = path.commands[i];
+        if (cmd.x !== undefined) {
+            blueCircles.push({
+                x: cmd.x,
+                y: -cmd.y
+            });
+        }
+        if (cmd.x1 !== undefined) {
+            redCircles.push({
+                x: cmd.x1,
+                y: -cmd.y1
+            });
+        }
+        if (cmd.x2 !== undefined) {
+            redCircles.push({
+                x: cmd.x2,
+                y: -cmd.y2
+            });
+        }
+    }
+
+    ctx.fillStyle = '#00bff3';
+    drawCircles(blueCircles, x, y, scale);
+    ctx.fillStyle = '#07D2A5';
+    drawCircles(redCircles, x, y, scale);
 }
 
 function onFontLoaded(font) {
