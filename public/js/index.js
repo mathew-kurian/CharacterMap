@@ -1,3 +1,6 @@
+// Code from
+// http://nodebox.github.io/opentype.js/
+
 var fileButton, fontFamily;
 var pageSelected, font, fontScale, fontSize, fontBaseline, glyphScale, glyphSize, glyphBaseline;
 
