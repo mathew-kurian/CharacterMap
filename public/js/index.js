@@ -143,10 +143,10 @@ function renderGlyphItem(canvas, glyphIndex) {
 function initGlyphDisplay() {
     var glyphBgCanvas = document.getElementById('glyph-bg');
 
-    glyphBgCanvas.width = glyphBgCanvas.width * window.devicePixelRatio;
-    glyphBgCanvas.height = glyphBgCanvas.height * window.devicePixelRatio;
     $(glyphBgCanvas).css('width', glyphBgCanvas.width);
     $(glyphBgCanvas).css('height', glyphBgCanvas.height);
+    glyphBgCanvas.width = glyphBgCanvas.width * window.devicePixelRatio;
+    glyphBgCanvas.height = glyphBgCanvas.height * window.devicePixelRatio;
 
     var w = glyphBgCanvas.width / window.devicePixelRatio,
         h = 300,
@@ -385,10 +385,10 @@ function prepareGlyphList() {
         parent = marker.parentElement;
     for (var i = 0; i < cellCount; i++) {
         var canvas = document.createElement('canvas');
-        canvas.width = cellWidth * window.devicePixelRatio;
-        canvas.height = cellHeight* window.devicePixelRatio;
         $(canvas).css('width', canvas.width);
         $(canvas).css('height', canvas.height);
+        canvas.width = cellWidth * window.devicePixelRatio;
+        canvas.height = cellHeight* window.devicePixelRatio;
         canvas.className = 'item';
         canvas.id = 'g' + i;
         canvas.addEventListener('click', cellSelect, false);
