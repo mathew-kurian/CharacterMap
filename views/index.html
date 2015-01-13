@@ -12,24 +12,28 @@
     <script src ="js/index.js" type="text/javascript"></script>
   </head>
   <body>
-    <div style = "position:fixed;top:0;right:0;left:0;bottom:0;width:200px;background:#171D25;">
-      <div id="pagination">
-        <div class="page browse-wrap">
-          <div class="title page" id="font-family">select font</div>
-          <input id="file" type="file" name="upload" class="upload" title="select font" />
-        </div>
+    <div style = "position:fixed;top:0;right:0;left:0;bottom:0;width:200px;background:#171D25;padding:20px;">
+      <div style = "font-size: 30px;color:#FFF;font-weight: 100;letter-spacing:1px;text-align:left;margin-top:10px;">Charmap</div>
+      <div style = "font-size: 10px;color:#999;font-weight: 500;letter-spacing:1px;text-transform:uppercase;text-align:left;margin-bottom:40px;">Powered By OpenType.js</div>
+      <div class="page browse-wrap" style="margin-top:40px;margin-bottom:20px;padding:12px 20px;border-radius:0;position:relative;left:-20px;width:200px;text-align:left;">
+        <div class="title" id="font-family" style="text-align:left;">Select font</div>
+        <input id="file" type="file" name="upload" class="upload" title="select font" />
       </div>
+      <div id="pagination"></div>
     </div>
-    <div style="position:fixed;left:200px;width:600px;top:0;bottom:0;background:#1D242E;padding:20px;">
-      <div id="glyph-display">
-        <canvas id="glyph-bg" width="600" height="500"></canvas>
-        <canvas id="glyph" width="500" height="500" style="left:120px;"></canvas>
+    <div style="position:fixed;left:200px;width:475px;top:0;bottom:0;background:#1D242E;padding:20px;">
+      <div style = "font-size: 30px;color:#4A575E;font-weight: 100;letter-spacing:1px;text-align:left;margin-top:10px;margin-bottom:20px;">Details</div>
+      <div id="glyph-display" style="position:relative;">
+        <canvas id="glyph-bg" width="420" height="310"></canvas>
+        <canvas id="glyph" width="300" height="300"></canvas>
       </div>
+      <div id="glyph-data"></div>
     </div>
-    <div style="position:fixed;left:850px;right:0;top:0;bottom:0;background: #FFF;">
-        <div style="overflow:auto;height:100%;overflow-x:hidden;">
-          <div id="glyph-list-end"></div>
-        </div>
+    <div style="position:fixed;left:675px;right:0;top:0;bottom:0;background: #FFF;">
+      <div style = "font-size: 30px;color:#CCC;font-weight: 100;letter-spacing:1px;text-align:left;margin-top:30px;margin-bottom:20px;margin-left:20px;">Glyphs</div>
+      <div style="overflow:auto;height:100%;overflow-x:hidden;">
+        <div id="glyph-list-end"></div>
+      </div>
     </div>
     <div>
       <div id="message"></div>

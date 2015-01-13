@@ -7,41 +7,47 @@ html, body {
     font-weight: 300;
     color: #FFF;
 }
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
 #glyph {
     position: absolute;
-    top:20px;
-    left:0;
+    top: 0;
+    left: 125px;
     margin: 0 auto;
-    right:0;
 }
 .item {
     float: left;
     cursor: pointer;
     border: solid 1px #EEE;
+    margin-bottom: -1px;
     margin-right: -1px;
-    margin-top:-1px;
+    background: #FFF;
 }
 .page {
     vertical-align: middle;
-    font-size: 12px;
-    text-align: center;
-    padding: 10px 0;
+    font-size: 14px;
     cursor: pointer;
+    padding: 8px 0;
+    color: #888;
 }
 .page-selected {
     font-weight: bold;
-    background: #444;
+    color: #FFF;
 }
 .browse-wrap {
     cursor: pointer;
     overflow: hidden;
     position: relative;
-    background-color: #00bff3;
+    background-color: #DA3610;
     width: 100%;
 }
 .title {
     color: #FFF;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 1px;
@@ -76,4 +82,24 @@ html, body {
 }
 .item:hover {
     background: #EEE;
+}
+#glyph-data {
+    float: left;
+}
+#glyph-data dl {
+    margin: 0;
+}
+#glyph-data dt {
+    float: left;
+    font: 600 12px/1.4 "Open Sans";
+    color: #788b94;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+#glyph-data dd {
+    margin-left: 90px;
+    font: 600 12px/1.4 "Open Sans";
+    color: #c3d7ef;
+    text-transform: uppercase;
+    margin-bottom: 10px;
 }
