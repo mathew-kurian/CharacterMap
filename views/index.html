@@ -14,26 +14,44 @@
   </head>
   <body>
     <div style = "position:fixed;top:0;right:0;left:0;bottom:0;width:200px;background:#171D25;padding:20px;">
-      <div style = "font-size: 30px;color:#FFF;font-weight: 100;letter-spacing:1px;text-align:left;margin-top:10px;">Charmap</div>
-      <div style = "font-size: 10px;color:#999;font-weight: 500;letter-spacing:1px;text-transform:uppercase;text-align:left;margin-bottom:40px;">Powered By OpenType.js</div>
-      <div class="page browse-wrap" style="margin-top:40px;margin-bottom:20px;padding:12px 20px;border-radius:0;position:relative;left:-20px;width:200px;text-align:left;">
-        <div class="title" id="font-family" style="text-align:left;">Select font</div>
-        <input id="file" type="file" name="upload" class="upload" title="select font" />
+      <div style="position:absolute;top:0;left:0;right:0;height:80px;padding:20px;z-index:3;background:#171D25;">
+        <div style = "font-size: 30px;color:#4A575E;font-weight: 400;letter-spacing:1px;text-align:left;">Charmap</div>
+        <div style = "font-size: 8px;color:#999;font-weight: 500;letter-spacing:1px;text-transform:uppercase;text-align:left;position:relative;top:-2px;">Powered By OpenType.js</div>
       </div>
-      <div id="pagination"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:80px;box-shadow:0 -1px 3px rgba(0,0,0,0.2);z-index:3;background:#171D25;">
+        <div class="browse-wrap" style="position:relative;height:80px;">
+          <div class="title" id="font-family" style="text-align:center;line-height:80px;">Select font</div>
+          <input id="file" type="file" name="upload" class="upload" title="select font" />
+        </div>
+      </div>
+      <div style="position:absolute;top:80px;left:0;right:0;bottom:80px;z-index:2;">
+        <div style="overflow:auto;height:100%;overflow-x:hidden;padding:20px;">
+          <div id="pagination"></div>
+        </div>
+      </div>
     </div>
     <div style="position:fixed;left:200px;width:475px;top:0;bottom:0;background:#1D242E;padding:20px;">
-      <div style = "font-size: 30px;color:#4A575E;font-weight: 100;letter-spacing:1px;text-align:left;margin-top:10px;margin-bottom:20px;">Details</div>
-      <div id="glyph-display" style="position:relative;">
-        <canvas id="glyph-bg" width="420" height="310"></canvas>
-        <canvas id="glyph" width="300" height="300"></canvas>
+      <div style="position:absolute;top:0;left:0;right:0;height:80px;padding:20px;z-index:3;background:#1D242E;">
+        <div style = "font-size: 25px;margin-top:5px;color:#4A575E;font-weight: 100;letter-spacing:1px;text-align:left;">Details</div>
       </div>
-      <div id="glyph-data"></div>
+      <div style="position:absolute;top:80px;left:0;right:0;bottom:0;z-index:2;">
+        <div style="overflow:auto;height:100%;overflow-x:hidden;padding:20px;">
+          <div id="glyph-display" style="position:relative;">
+            <canvas id="glyph-bg" width="420" height="310"></canvas>
+            <canvas id="glyph" width="300" height="300"></canvas>
+          </div>
+          <div id="glyph-data"></div>
+        </div>
+      </div>
     </div>
     <div style="position:fixed;left:675px;right:0;top:0;bottom:0;background: #FFF;">
-      <div style = "font-size: 30px;color:#CCC;font-weight: 100;letter-spacing:1px;text-align:left;margin-top:30px;margin-bottom:20px;margin-left:20px;">Glyphs</div>
-      <div style="overflow:auto;height:100%;overflow-x:hidden;">
-        <div id="glyph-list-end"></div>
+      <div style="position:absolute;top:0;left:0;right:0;height:80px;padding:20px;box-shadow:inset 0 -1px 0 #EEE;z-index:3;background:#FFF;">
+        <div style = "font-size: 25px;margin-top:5px;color:#DDD;font-weight: 100;letter-spacing:1px;text-align:left;">Glyphs</div>
+      </div>
+      <div style="position:absolute;top:80px;left:0;right:0;bottom:0;z-index:2;">
+        <div style="overflow:auto;height:100%;overflow-x:hidden;">
+          <div id="glyph-list-end"></div>
+        </div>
       </div>
     </div>
     <div>

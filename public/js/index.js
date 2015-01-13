@@ -329,7 +329,7 @@ function onFontLoaded(font) {
     fontBaseline = cellMarginTop + h * head.yMax / maxHeight;
 
     var pagination = document.getElementById("pagination");
-    while (pagination.childNodes.length > 2) pagination.removeChild(pagination.lastChild);
+    pagination.innerHTML = '';
     var fragment = document.createDocumentFragment();
     var numPages = Math.ceil(font.numGlyphs / cellCount);
     for (var i = 0; i < numPages; i++) {
