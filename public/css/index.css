@@ -26,6 +26,7 @@ html, body {
     font-size: 12px;
     text-align: center;
     padding: 10px 0;
+    cursor: pointer;
 }
 .page-selected {
     font-weight: bold;
