@@ -4,8 +4,8 @@ var pageSelected, font, fontScale, fontSize, fontBaseline, glyphScale, glyphSize
 var cellCount = 200,
     cellWidth = 60,
     cellHeight = 70,
-    cellMarginTop = 20
-cellMarginBottom = 20,
+    cellMarginTop = 20,
+    cellMarginBottom = 20,
     cellMarginLeftRight = 1,
     glyphMargin = 5;
 
@@ -24,8 +24,37 @@ $(document).ready(function() {
     fontFamily = document.getElementById('font-family');
     fileButton = document.getElementById('file');
     fileButton.addEventListener('change', onReadFile, false);
+    var fontFileName = 'fonts/arialbd.ttf';
+    opentype.load(fontFileName, function(err, font) {
+        var amount, glyph, ctx, x, y, fontSize;
+        if (err) {
+            showErrorMessage(err.toString());
+            return;
+        }
+        onFontLoaded(font);
+    });
     prepareGlyphList();
 
+    $(".nicescroll-left").niceScroll({
+        cursorcolor: "rgba(255,255,255,0.2)",
+        cursorborderradius: "5px",
+        cursorborder: "none",
+        cursorwidth: "7"
+    });
+
+    $(".nicescroll-center").niceScroll({
+        cursorcolor: "rgba(255,255,255,0.4)",
+        cursorborderradius: 0,
+        cursorborder: "none",
+        cursorwidth: "7"
+    });
+
+    $(".nicescroll-right").niceScroll({
+        cursorcolor: "#AAA",
+        cursorborderradius: 0,
+        cursorborder: "none",
+        cursorwidth: "7"
+    });
     // Span
     // var span = document.getElementsByClassName('upload-path');
     // Button
@@ -133,7 +162,7 @@ function renderGlyphItem(canvas, glyphIndex) {
     ctx.fillStyle = '#FFFFFF';
 
     var path = glyph.getPath(x0, fontBaseline, fontSize);
-    path.fill = "#555";
+    path.fill = "#333";
     path.draw(ctx);
 }
 
@@ -184,7 +213,7 @@ function onReadFile(e) {
     reader.onload = function(e) {
         try {
             font = opentype.parse(e.target.result);
-            fontFamily.innerHTML = font.familyName || this.files[0].name.replace(/\.[^/.]+$/, "");
+            // fontFamily.innerHTML = font.familyName || this.files[0].name.replace(/\.[^/.]+$/, "");
             showErrorMessage('');
             onFontLoaded(font);
         } catch (err) {
@@ -201,32 +230,49 @@ function onReadFile(e) {
 
 function displayGlyphData(glyphIndex) {
     var container = document.getElementById('glyph-data');
+    var holdtext = document.getElementById('copy-char');
+
     if (glyphIndex < 0) {
         container.innerHTML = '';
         return;
     }
     var glyph = font.glyphs[glyphIndex],
         html;
-    html = '<dt>name</dt><dd>' + glyph.name + '</dd>';
+    html = '<div><dt>name</dt><dd>' + glyph.name + '</dd></div>';
 
     if (glyph.unicodes.length > 0) {
-        html += '<dt>unicode</dt><dd>' + glyph.unicodes.map(formatUnicode).join(', ') + '</dd>';
+        html += '<div><dt>unicode</dt><dd>' + glyph.unicodes.map(formatUnicode).join(', ') + '</dd></div>';
+        holdtext.value = String.fromCharCode(parseInt(glyph.unicodes.map(formatUnicode)[0], 16));
     }
-    html += '<dl><dt>index</dt><dd>' + glyph.index + '</dd>';
+
+    html += '<div><dt>index</dt><dd>' + glyph.index + '</dd></div>';
 
     if (glyph.xMin !== 0 || glyph.xMax !== 0 || glyph.yMin !== 0 || glyph.yMax !== 0) {
-        html += '<dt>xMin</dt><dd>' + glyph.xMin + '</dd>' +
-            '<dt>xMax</dt><dd>' + glyph.xMax + '</dd>' +
-            '<dt>yMin</dt><dd>' + glyph.yMin + '</dd>' +
-            '<dt>yMax</dt><dd>' + glyph.yMax + '</dd>';
+        html += '<div><dt>xMin</dt><dd>' + glyph.xMin + '</dd></div>' +
+            '<div><dt>xMax</dt><dd>' + glyph.xMax + '</dd></div>' +
+            '<div><dt>yMin</dt><dd>' + glyph.yMin + '</dd></div>' +
+            '<div><dt>yMax</dt><dd>' + glyph.yMax + '</dd></div>';
     }
-    html += '<dt>advWidth</dt><dd>' + glyph.advanceWidth + '</dd>';
+    html += '<div><dt>advWidth</dt><dd>' + glyph.advanceWidth + '</dd></div>';
     if (glyph.leftSideBearing !== undefined) {
-        html += '<dt>leftBearing</dt><dd>' + glyph.leftSideBearing + '</dd>';
+        html += '<div><dt>leftBearing</dt><dd>' + glyph.leftSideBearing + '</dd></div>';
     }
-    html += '</dl>';
     container.innerHTML = html;
 }
+
+function displayFontBasic() {
+    var container = document.getElementById('font-data');
+
+    console.log(font);
+
+    var html = '<div><dt>family</dt><dd>' + font.familyName + '</dd></div>';
+    html += '<div><dt>style</dt><dd>' + font.styleName + '</dd></div>';
+    html += '<div><dt>format</dt><dd>' + font.outlinesFormat + '</dd></div>';
+    html += '<div><dt>version</dt><dd>' + font.version + '</dd></div>';
+
+    container.innerHTML = html;
+}
+
 
 var resolveDisplayGlyph;
 
@@ -249,7 +295,7 @@ function displayGlyph(glyphIndex) {
         x0 = xmin,
         markSize = 10;
 
-    ctx.fillStyle = '#EA682E';
+    ctx.fillStyle = '#14bfff';
     ctx.fillRect(xmin - markSize + 1, glyphBaseline, markSize, 2);
     ctx.fillRect(xmin, glyphBaseline, 2, markSize);
     ctx.fillRect(xmax, glyphBaseline, markSize, 2);
@@ -346,6 +392,7 @@ function onFontLoaded(font) {
     }
     pagination.appendChild(fragment);
 
+    displayFontBasic();
     initGlyphDisplay();
     displayGlyphPage(0);
     displayGlyph(-1);
@@ -411,11 +458,5 @@ function hidpi(canvas, height, width) {
 }
 
 function showErrorMessage(message) {
-    var el = document.getElementById('message');
-    if (!message || message.trim().length === 0) {
-        el.style.display = 'none';
-    } else {
-        el.style.display = 'block';
-    }
-    el.innerHTML = message;
+    if (message) alert(message);
 }
