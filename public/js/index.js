@@ -266,8 +266,6 @@ function displayGlyphData(glyphIndex) {
 function displayFontBasic() {
     var container = document.getElementById('font-data');
 
-    console.log(font);
-
     var html = '<div><dt>family</dt><dd>' + font.familyName + '</dd></div>';
     html += '<div><dt>style</dt><dd>' + font.styleName + '</dd></div>';
     html += '<div><dt>format</dt><dd>' + font.outlinesFormat + '</dd></div>';
