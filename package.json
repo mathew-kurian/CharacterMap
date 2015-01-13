@@ -25,7 +25,8 @@
   "main": "app.js",
   "license": "MIT",
   "dependencies": {
-    "scribe-js": "^2.0.3"
+    "scribe-js": "^2.0.3",
+    "express": "^4.0.0"
   },
   "readmeFilename": "README.md"
 }
