@@ -35,13 +35,11 @@ html {
     color: #888;
     background: rgba(255, 255, 255, 0.05);
     border-radius:3px;
-    border:1px solid rgba(255, 255, 255, 0.1);
 }
 .page-selected {
     font-weight: bold;
     color: #FFF;
     background: rgba(255, 255, 255, 0.1);
-    border:1px solid rgba(255, 255, 255, 0.15);
 }
 .browse-wrap {
     cursor: pointer;
