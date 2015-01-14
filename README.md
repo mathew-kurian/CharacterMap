@@ -1,3 +1,3 @@
-[![Heroku](https://heroku-badge.herokuapp.com/?app=char-map)](http://bluejamesbond.github.io/CharacterMap/)
+[![Build Status](https://travis-ci.org/bluejamesbond/CharacterMap.svg?branch=master)](https://travis-ci.org/bluejamesbond/CharacterMap)  
 # CharacterMap
 Online CharacterMap / IconViewer / GlphViewer
