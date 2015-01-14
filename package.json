@@ -1,7 +1,7 @@
 {
   "name": "character-map",
   "description": "Online accessible font-character map / glyph viewer",
-  "version": "2.0.3",
+  "version": "1.0.0",
   "homepage": "https://github.com/bluejamesbond/CharacterMap",
   "keywords": [],
   "author": {
