@@ -423,8 +423,12 @@ function formatUnicode(unicode) {
     }
 }
 
-function pageSelect() {
-    document.getElementsByClassName('page-selected')[0].className = 'page';
+function pageSelect(event) {
+    var selected = document.getElementsByClassName('page-selected');
+    if(selected.length > 0) {
+        selected[0].className = 'page';
+    }
+
     displayGlyphPage(+event.target.id.substr(1));
 }
 
