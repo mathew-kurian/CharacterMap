@@ -1,3 +1,0 @@
-[submodule "public/js/opentype.js"]
-	path = public/js/opentype.js
-	url = https://github.com/nodebox/opentype.js.git

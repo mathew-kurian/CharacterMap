@@ -27,4 +27,7 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 
+.idea/
+.idea/vcs.xml
+
 /node_modules
